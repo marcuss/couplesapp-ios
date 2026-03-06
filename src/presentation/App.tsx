@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { DebugPanel } from '../components/debug/DebugPanel';
+import { useDebugPanel } from '../hooks/useDebugPanel';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -146,11 +148,19 @@ const AppRoutes: React.FC = () => {
   );
 };
 
+const DebugOverlay: React.FC = () => {
+  const { isOpen, setIsOpen, isEnabled } = useDebugPanel();
+  if (!isEnabled) return null;
+  return <DebugPanel isOpen={isOpen} onClose={() => setIsOpen(false)} />;
+};
+
 export const App: React.FC = () => {
   return (
     <AuthProvider>
       <Router>
         <AppRoutes />
+        {/* Debug panel — only renders in TestFlight / Debug builds */}
+        <DebugOverlay />
       </Router>
     </AuthProvider>
   );
