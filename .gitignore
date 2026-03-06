@@ -46,3 +46,11 @@ test-results
 .cache
 .temp
 .tmp
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.*
+terraform.tfvars
+.terraform/
